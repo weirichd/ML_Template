@@ -25,4 +25,3 @@ touch .renamed
 
 echo "Rename complete!"
 echo "Next: run 'make init'"
-

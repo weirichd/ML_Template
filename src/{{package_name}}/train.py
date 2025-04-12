@@ -5,13 +5,15 @@ import mlflow.tensorflow
 
 
 def build_model(input_shape):
-    model = tf.keras.Sequential([
-        tf.keras.layers.Input(shape=input_shape),
-        tf.keras.layers.Dense(64, activation='relu'),
-        tf.keras.layers.Dense(32, activation='relu'),
-        tf.keras.layers.Dense(1, activation='linear')
-    ])
-    model.compile(optimizer='adam', loss='mse', metrics=['mae'])
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Input(shape=input_shape),
+            tf.keras.layers.Dense(64, activation="relu"),
+            tf.keras.layers.Dense(32, activation="relu"),
+            tf.keras.layers.Dense(1, activation="linear"),
+        ]
+    )
+    model.compile(optimizer="adam", loss="mse", metrics=["mae"])
     return model
 
 
@@ -36,4 +38,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

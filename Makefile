@@ -147,4 +147,3 @@ clean: ## Remove local docker containers/images
 	docker rmi -f $(IMAGE_BASE_NAME)-notebook:${TF_VERSION}-cpu || true
 	docker rmi -f $(IMAGE_BASE_NAME)-api:${TF_VERSION} || true
 	docker rmi -f $(IMAGE_BASE_NAME)-api:${TF_VERSION}-cpu || true
-

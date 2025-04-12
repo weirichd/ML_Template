@@ -1,6 +1,6 @@
 # {{package_name}}
 
-Machine Learning / Deep Learning Project Template  
+Machine Learning / Deep Learning Project Template
 Supports local development, Dockerized training & serving, MLflow tracking, GPU/CPU flexibility.
 
 ---
@@ -158,4 +158,3 @@ Safe to delete in cloned projects.
 - Optional MLflow Model Registry
 - Optional TensorBoard Service
 - Optional Distributed Training Support
-

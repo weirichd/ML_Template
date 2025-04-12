@@ -26,4 +26,3 @@ def predict_endpoint(request: PredictRequest):
     input_array = np.array(request.data, dtype=np.float32)
     predictions = predict(model, input_array)
     return {"predictions": predictions.tolist()}
-

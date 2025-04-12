@@ -33,4 +33,3 @@ def predict(model: tf.keras.Model, input_data):
         Model predictions.
     """
     return model.predict(input_data)
-
