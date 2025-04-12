@@ -14,17 +14,35 @@ TF_IMAGE_CPU_API = tensorflow/tensorflow:$(TF_VERSION)
 help:  ## Show available make commands
 	@grep -E '^[a-zA-Z_-]+:.*?## ' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-init: check-renamed ## Initial project setup
+init: check-renamed check-python-version ## Initial project setup
 	poetry install
 	pre-commit install
 	make export-requirements
 
 check-renamed:
-	@if grep -rq '{{package_name}}' src/ ; then \
+	@if grep -rq '{{package_name}}' . \
+		--exclude-dir=.git --exclude=rename.sh  \
+		--exclude=Makefile --exclude=tags; then \
 		echo "ERROR: Looks like you haven't run ./rename.sh yet."; \
 		echo "Please run:"; \
 		echo "    ./rename.sh yourpackagename"; \
 		exit 1; \
+	fi
+
+check-python-version:
+	@PY_VERSION=$$(poetry env info --path 2>/dev/null || echo "none"); \
+	if [ "$$PY_VERSION" = "none" ]; then \
+		echo "WARNING: No poetry environment found."; \
+		echo "Attempting to use Python 3.11..."; \
+		poetry env use 3.11 || echo "ERROR: Python 3.11 not found. Please install with pyenv."; \
+	else \
+		POETRY_PY=$$(poetry run python --version | awk '{print $$2}'); \
+		echo "Poetry is using Python $$POETRY_PY"; \
+		if ! echo $$POETRY_PY | grep -q '^3\.11'; then \
+			echo "ERROR: Poetry is using Python $$POETRY_PY but this project requires Python 3.11.x"; \
+			echo "To fix: pyenv install 3.11.x && poetry env use 3.11"; \
+			exit 1; \
+		fi \
 	fi
 
 export-requirements: ## Export requirements.txt from poetry
