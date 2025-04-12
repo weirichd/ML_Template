@@ -20,8 +20,5 @@ mv src/{{package_name}} "src/$PACKAGE_NAME"
 # Update .env IMAGE_BASE_NAME
 sed -i "s/IMAGE_BASE_NAME=.*/IMAGE_BASE_NAME=$PACKAGE_NAME/" .env
 
-# Sentinel file for Makefile checks
-touch .renamed
-
 echo "Rename complete!"
 echo "Next: run 'make init'"
