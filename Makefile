@@ -1,3 +1,6 @@
+include .env
+export $(shell sed 's/=.*//' .env)
+
 PACKAGE_NAME_CHECK := {{package_name}}
 
 TF_IMAGE_GPU = tensorflow/tensorflow:$(TF_VERSION)-gpu
