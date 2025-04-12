@@ -26,6 +26,8 @@ chmod +x rename.sh
 ./rename.sh <your package name>
 ```
 
+This will replace every instance of  `{{package_name}}` with whatever you entered, excluding a few important files.
+
 ---
 
 ### 3. Initialize the project locally
@@ -118,17 +120,6 @@ Check for outdated packages:
 ```bash
 make upgrade
 ```
-
----
-
-## Files Specific To The Template Repo Only
-
-|File|Purpose|
-|----|-------|
-|.github/workflows/upgrade.yml|Auto-upgrade dependencies for the template repo only|
-|.github/TEMPLATE_ONLY.md|Explains what is template-specific|
-
-Safe to delete in cloned projects.
 
 ---
 
