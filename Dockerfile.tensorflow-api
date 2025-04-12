@@ -16,7 +16,7 @@ RUN pip install --upgrade pip
 COPY requirements.txt .
 
 # Install Python dependencies + API server deps
-RUN pip install --no-cache-dir -r requirements.txt \
+RUN pip install --no-cache-dir --ignore-installed -r requirements.txt \
     fastapi uvicorn
 
 COPY src /workspace/src

@@ -18,9 +18,12 @@ cd your-repo
 
 ### 2. Rename the project
 
+This template enforces a renaming check.
+Run this command first thing.
+
 ```bash
 chmod +x rename.sh
-./rename.sh yourpackagename
+./rename.sh <your package name>
 ```
 
 ---
@@ -30,6 +33,18 @@ chmod +x rename.sh
 ```bash
 make init
 ```
+
+---
+
+## Requirements
+
+This project requires:
+
+|Tool|Minimum Version|Notes|
+|----|----------------|-----|
+|Python|3.11.x|Recommended to use [pyenv](https://github.com/pyenv/pyenv) for managing Python versions|
+|Poetry|1.9.x|Recommended to install via [pipx](https://pipx.pypa.io/) and ensure it's using Python 3.11|
+
 
 ---
 
@@ -48,6 +63,22 @@ make init
 |make lint|Run pre-commit checks|
 |make upgrade|Upgrade deps to latest|
 |make mlflow-up|Start MLflow UI|
+
+---
+
+## Environment Variables
+
+Configure via `.env` file:
+
+```dotenv
+IMAGE_BASE_NAME=myprojectname
+TF_VERSION=2.19.0
+
+NOTEBOOK_PORT=8888
+API_PORT=8000
+MLFLOW_PORT=5000
+MLFLOW_TRACKING_URI=http://mlflow:5000
+```
 
 ---
 
