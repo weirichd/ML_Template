@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # Poetry virtualenvs (if inside project)
-.env
+.env/    # Only ignore the directory, not the .env file
 .venv
 venv/
 
