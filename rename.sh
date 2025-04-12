@@ -11,8 +11,8 @@ PACKAGE_NAME="$1"
 
 echo "Renaming project to: $PACKAGE_NAME"
 
-# Replace all instances of {{package_name}} in files
-grep -rl '{{package_name}}' . | xargs sed -i "s/{{package_name}}/$PACKAGE_NAME/g"
+# Replace all instances of {{package_name}} except in rename.sh and Makefile
+grep -rl '{{package_name}}' . --exclude=rename.sh --exclude=Makefile | xargs sed -i "s/{{package_name}}/$PACKAGE_NAME/g"
 
 # Rename the package directory
 mv src/{{package_name}} "src/$PACKAGE_NAME"
@@ -20,7 +20,7 @@ mv src/{{package_name}} "src/$PACKAGE_NAME"
 # Update .env IMAGE_BASE_NAME
 sed -i "s/IMAGE_BASE_NAME=.*/IMAGE_BASE_NAME=$PACKAGE_NAME/" .env
 
-# Optional: Create sentinel file so Makefile knows rename was run
+# Sentinel file for Makefile checks
 touch .renamed
 
 echo "Rename complete!"
