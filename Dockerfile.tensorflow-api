@@ -1,4 +1,4 @@
-ARG TF_IMAGE=tensorflow/tensorflow:${TF_VERSION}-gpu
+ARG TF_IMAGE
 
 FROM ${TF_IMAGE}
 
