@@ -70,56 +70,55 @@ notebook: ## Run local Jupyter Notebook
 shell: ## Run IPython shell
 	poetry run ipython
 
-# CLI ------------------------------------------------------------
 
-build-cli: export-requirements
-	docker build --build-arg TF_IMAGE=$(TF_IMAGE_GPU) -f Dockerfile.tensorflow-cli -t $(IMAGE_BASE_NAME)-cli:${TF_VERSION} .
-
-build-cli-cpu: export-requirements
-	docker build --build-arg TF_IMAGE=$(TF_IMAGE_CPU) -f Dockerfile.tensorflow-cli -t $(IMAGE_BASE_NAME)-cli:${TF_VERSION}-cpu .
-
-run-cli: check-gpu
+# Internal helper to decide if we're building GPU or CPU images
+define BUILD_IMAGE
 	@if [ -f .no-gpu ]; then \
-		echo "Running CLI in CPU mode..."; \
-		docker run -it --rm -v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-cli:${TF_VERSION}-cpu; \
+		echo "Building CPU image: $(IMAGE_BASE_NAME)-$1:$(TF_VERSION)"; \
+		docker build --build-arg TF_IMAGE=$(TF_IMAGE_CPU_$2) -f Dockerfile.tensorflow-$2 -t $(IMAGE_BASE_NAME)-$1:$(TF_VERSION) .; \
 	else \
-		echo "Running CLI in GPU mode..."; \
-		docker run --gpus all -it --rm -v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-cli:${TF_VERSION}; \
+		echo "Building GPU image: $(IMAGE_BASE_NAME)-$1:$(TF_VERSION)"; \
+		docker build --build-arg TF_IMAGE=$(TF_IMAGE_GPU_$2) -f Dockerfile.tensorflow-$2 -t $(IMAGE_BASE_NAME)-$1:$(TF_VERSION) .; \
 	fi
+endef
 
-# NOTEBOOK --------------------------------------------------------
+build-cli:
+	$(call BUILD_IMAGE,cli,cli)
 
-build-notebook: export-requirements
-	docker build --build-arg TF_IMAGE=$(TF_IMAGE_GPU_NOTEBOOK) -f Dockerfile.tensorflow-notebook -t $(IMAGE_BASE_NAME)-notebook:${TF_VERSION} .
+build-api:
+	$(call BUILD_IMAGE,api,api)
 
-build-notebook-cpu: export-requirements
-	docker build --build-arg TF_IMAGE=$(TF_IMAGE_CPU_NOTEBOOK) -f Dockerfile.tensorflow-notebook -t $(IMAGE_BASE_NAME)-notebook:${TF_VERSION}-cpu .
+build-notebook:
+	$(call BUILD_IMAGE,notebook,notebook)
 
-run-notebook: check-gpu
+
+# Internal helper to run container with GPU or CPU image
+define RUN_IMAGE
 	@if [ -f .no-gpu ]; then \
-		echo "Running Notebook in CPU mode..."; \
-		docker run -it --rm -p $(NOTEBOOK_PORT):8888 -v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-notebook:${TF_VERSION}-cpu; \
+		echo "Running CPU container: $(IMAGE_BASE_NAME)-$1:$(TF_VERSION)"; \
+		docker run -it --rm --name $(CONTAINER_NAME_$2) -p $3 \
+		-v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-$1:$(TF_VERSION); \
 	else \
-		echo "Running Notebook in GPU mode..."; \
-		docker run --gpus all -it --rm -p $(NOTEBOOK_PORT):8888 -v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-notebook:${TF_VERSION}; \
+		echo "Running GPU container: $(IMAGE_BASE_NAME)-$1:$(TF_VERSION)"; \
+		docker run --gpus all -it --rm --name $(CONTAINER_NAME_$2) -p $3 \
+		-v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-$1:$(TF_VERSION); \
 	fi
+endef
 
-# API ------------------------------------------------------------
+# Container names
+CONTAINER_NAME_CLI=$(IMAGE_BASE_NAME)-cli
+CONTAINER_NAME_API=$(IMAGE_BASE_NAME)-api
+CONTAINER_NAME_NOTEBOOK=$(IMAGE_BASE_NAME)-notebook
 
-build-api: export-requirements
-	docker build --build-arg TF_IMAGE=$(TF_IMAGE_GPU_API) -f Dockerfile.tensorflow-api -t $(IMAGE_BASE_NAME)-api:${TF_VERSION} .
+run-cli:
+	$(call RUN_IMAGE,cli,CLI,)
 
-build-api-cpu: export-requirements
-	docker build --build-arg TF_IMAGE=$(TF_IMAGE_CPU_API) -f Dockerfile.tensorflow-api -t $(IMAGE_BASE_NAME)-api:${TF_VERSION}-cpu .
+run-api:
+	$(call RUN_IMAGE,api,API,$(API_PORT):8000)
 
-run-api: check-gpu
-	@if [ -f .no-gpu ]; then \
-		echo "Running API in CPU mode..."; \
-		docker run -it --rm -p $(API_PORT):8000 -v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-api:${TF_VERSION}-cpu; \
-	else \
-		echo "Running API in GPU mode..."; \
-		docker run --gpus all -it --rm -p $(API_PORT):8000 -v $(shell pwd):/workspace $(IMAGE_BASE_NAME)-api:${TF_VERSION}; \
-	fi
+run-notebook:
+	$(call RUN_IMAGE,notebook,NOTEBOOK,$(NOTEBOOK_PORT):8888)
+
 
 # MLFLOW ----------------------------------------------------------
 

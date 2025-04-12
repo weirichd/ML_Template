@@ -1,7 +1,9 @@
-# {{package_name}}
+# ML Template
 
 Machine Learning / Deep Learning Project Template
 Supports local development, Dockerized training & serving, MLflow tracking, GPU/CPU flexibility.
+
+The intent of this repo is to be used
 
 ---
 
@@ -10,9 +12,14 @@ Supports local development, Dockerized training & serving, MLflow tracking, GPU/
 ### 1. Clone the template
 
 ```bash
-git clone https://github.com/yourusername/your-repo.git
+git clone git@github.com:weirichd/ML_Template.git
 cd your-repo
 ```
+
+**OR**
+
+Click "Use this template" button on Github.
+Then clone the new repo locally and go go go!
 
 ---
 
@@ -32,9 +39,17 @@ This will replace every instance of  `{{package_name}}` with whatever you entere
 
 ### 3. Initialize the project locally
 
+Run this to initialize the repo.
+
 ```bash
 make init
 ```
+
+This will
+
+* Install the virtual environment with Poetry
+* Install pre-commit hooks for the repo
+* Autogenerate `requirements.txt` used for building Docker images.
 
 ---
 
@@ -52,19 +67,30 @@ This project requires:
 
 ## Building & Running
 
-|Command|Purpose|
-|-------|-------|
-|make build-cli|Build GPU training image|
-|make build-cli-cpu|Build CPU-only training image|
-|make run-cli|Run training (auto GPU or CPU)|
-|make build-api|Build API server image|
-|make run-api|Run API server (auto GPU or CPU)|
-|make build-notebook|Build Jupyter image|
-|make run-notebook|Run Jupyter (auto GPU or CPU)|
-|make test|Run tests|
-|make lint|Run pre-commit checks|
-|make upgrade|Upgrade deps to latest|
-|make mlflow-up|Start MLflow UI|
+Below is a summary of all `make` commands this template supports:
+
+
+| Command           | Description                                                    |
+|-------------------|----------------------------------------------------------------|
+| make help         | Show available make commands                                    |
+| make init         | Initial project setup: poetry install, pre-commit install, export requirements |
+| make upgrade      | Upgrade all dependencies to latest versions                     |
+| make export-requirements | Export requirements.txt from poetry                      |
+| make lint         | Run pre-commit checks                                           |
+| make test         | Run tests with pytest                                           |
+| make ci           | Run lint and tests (local CI)                                   |
+| make notebook     | Run local Jupyter Notebook (via poetry)                         |
+| make shell        | Run IPython shell (via poetry)                                  |
+| make build-cli    | Build Docker CLI image (GPU or CPU auto-detect)                 |
+| make run-cli      | Run Docker CLI container (GPU or CPU auto-detect)               |
+| make build-api    | Build Docker API image (GPU or CPU auto-detect)                 |
+| make run-api      | Run Docker API container (GPU or CPU auto-detect)               |
+| make build-notebook | Build Docker Notebook image (GPU or CPU auto-detect)         |
+| make run-notebook | Run Docker Notebook container (GPU or CPU auto-detect)          |
+| make mlflow-up    | Start MLflow tracking UI via docker-compose                     |
+| make check-gpu    | Check if GPUs are available, update .no-gpu file accordingly    |
+| make clean        | Remove local Docker containers and images                       |
+
 
 ---
 
