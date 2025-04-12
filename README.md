@@ -3,8 +3,6 @@
 Machine Learning / Deep Learning Project Template
 Supports local development, Dockerized training & serving, MLflow tracking, GPU/CPU flexibility.
 
-The intent of this repo is to be used
-
 ---
 
 ## Getting Started
@@ -21,7 +19,6 @@ cd your-repo
 Click "Use this template" button on Github.
 Then clone the new repo locally and go go go!
 
----
 
 ### 2. Rename the project
 
@@ -35,7 +32,6 @@ chmod +x rename.sh
 
 This will replace every instance of  `{{package_name}}` with whatever you entered, excluding a few important files.
 
----
 
 ### 3. Initialize the project locally
 
@@ -55,7 +51,7 @@ This will
 
 ## Requirements
 
-This project requires:
+This project template by default requires:
 
 |Tool|Minimum Version|Notes|
 |----|----------------|-----|
@@ -70,27 +66,26 @@ This project requires:
 Below is a summary of all `make` commands this template supports:
 
 
-| Command           | Description                                                    |
-|-------------------|----------------------------------------------------------------|
-| make help         | Show available make commands                                    |
-| make init         | Initial project setup: poetry install, pre-commit install, export requirements |
-| make upgrade      | Upgrade all dependencies to latest versions                     |
-| make export-requirements | Export requirements.txt from poetry                      |
-| make lint         | Run pre-commit checks                                           |
-| make test         | Run tests with pytest                                           |
-| make ci           | Run lint and tests (local CI)                                   |
-| make notebook     | Run local Jupyter Notebook (via poetry)                         |
-| make shell        | Run IPython shell (via poetry)                                  |
-| make build-cli    | Build Docker CLI image (GPU or CPU auto-detect)                 |
-| make run-cli      | Run Docker CLI container (GPU or CPU auto-detect)               |
-| make build-api    | Build Docker API image (GPU or CPU auto-detect)                 |
-| make run-api      | Run Docker API container (GPU or CPU auto-detect)               |
-| make build-notebook | Build Docker Notebook image (GPU or CPU auto-detect)         |
-| make run-notebook | Run Docker Notebook container (GPU or CPU auto-detect)          |
-| make mlflow-up    | Start MLflow tracking UI via docker-compose                     |
-| make check-gpu    | Check if GPUs are available, update .no-gpu file accordingly    |
-| make clean        | Remove local Docker containers and images                       |
-
+| Command      | Description                                                    |
+|--------------|----------------------------------------------------------------|
+| `help`       | Show available make commands                                   |
+| `init`       | Initial project setup: poetry install, pre-commit install, export requirements |
+| `upgrade`    | Upgrade all dependencies to latest versions                    |
+| `export-requirements` | Export requirements.txt from poetry                     |
+| `lint`       | Run pre-commit checks                                          |
+| `test`       | Run tests with pytest                                          |
+| `ci`         | Run lint and tests (local CI)                                  |
+| `notebook`   | Run local Jupyter Notebook (via poetry)                        |
+| `shell`      | Run IPython shell (via poetry)                                 |
+| `build-cli`    | Build Docker CLI image (GPU or CPU auto-detect)                |
+| `run-cli`      | Run Docker CLI container (GPU or CPU auto-detect)              |
+| `build-api`    | Build Docker API image (GPU or CPU auto-detect)                |
+| `run-api`      | Run Docker API container (GPU or CPU auto-detect)              |
+| `build-notebook` | Build Docker Notebook image (GPU or CPU auto-detect)         |
+| `run-notebook` | Run Docker Notebook container (GPU or CPU auto-detect)         |
+| `mlflow-up`    | Start MLflow tracking UI via docker-compose                    |
+| `check-gpu`    | Check if GPUs are available, update .no-gpu file accordingly   |
+| `clean`        | Remove local Docker containers and images                      |
 
 ---
 
