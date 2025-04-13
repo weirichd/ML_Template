@@ -2,7 +2,6 @@ import os
 import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel
-import tensorflow as tf
 
 from {{package_name}}.predict import load_model, predict
 

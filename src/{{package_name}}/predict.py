@@ -2,7 +2,7 @@ import os
 import tensorflow as tf
 
 
-def load_model(model_path: str = None):
+def load_model(model_path: str | None = None):
     """
     Loads a trained Keras model from disk.
 
