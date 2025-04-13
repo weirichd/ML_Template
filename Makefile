@@ -60,7 +60,7 @@ lint: ## Run pre-commit checks
 	pre-commit run --all-files
 
 test: ## Run tests
-	poetry run pytest -v
+	poetry run pytest -v tests
 
 ci: lint test ## Run pre-commit and tests (local CI)
 
