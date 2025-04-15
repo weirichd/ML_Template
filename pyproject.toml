@@ -21,6 +21,7 @@ filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::FutureWarning"
 ]
+addopts="--pdbcls=IPython.terminal.debugger:TerminalPdb"
 
 [build-system]
 requires = ["poetry-core"]
